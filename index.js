@@ -1,10 +1,11 @@
 const express = require('express');
 const app = express();
 const { MongoClient, ServerApiVersion } = require('mongodb');
+require("dotenv").config();
 const port = 3000;
 
 
-const uri = "mongodb+srv://Edubridge:dHJeEJztWLgKNsP4@cluster0.jc6c5mw.mongodb.net/?appName=Cluster0";
+const uri = process.env.MONGO_URI;
 
 
 
