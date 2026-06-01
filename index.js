@@ -1,8 +1,12 @@
 const express = require('express');
 const app = express();
+const cors = require('cors');
 const { MongoClient, ServerApiVersion } = require('mongodb');
 require("dotenv").config();
 const port = 3000;
+
+app.use(cors())
+
 
 
 const uri = process.env.MONGO_URI;
@@ -22,8 +26,9 @@ async function run() {
   try {
    
     await client.connect();
+    const dbname=process.env.DB_NAME;
     
-    const db=client.db("Edubridge");
+    const db=client.db(dbname);
 
 
 
