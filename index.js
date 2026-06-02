@@ -6,6 +6,7 @@ require("dotenv").config();
 const port = 3000;
 
 app.use(cors())
+app.use(express.json());
 
 
 
@@ -32,17 +33,22 @@ async function run() {
 
 
 
-    const noticecollection=await db.collection("Notices");
+    const noticecollection= db.collection("Notices");
+    const usercollection= db.collection("users")
 
 
 
     const noticerouter=require("./Router/Notices")
+    const loginrouter=require("./Router/authentication/Login")
+    const registerrouter=require("./Router/authentication/Register")
 
 
 
 
 
     app.use("/notice",noticerouter(noticecollection))
+    app.use("/login",loginrouter(usercollection))
+    app.use("/register",registerrouter(usercollection))
 
 
 
