@@ -38,9 +38,10 @@ async function run() {
 
 
 
-    const noticerouter=require("./Router/Notices")
+    const noticerouter=require("./Router/Notice/Notices")
     const registerrouter=require("./Router/authentication/Register")
     const loginuserrouter=require("./Router/Users/Loginuser")
+    const uploadnoticerouter=require("./Router/Notice/Uploadnotice")
 
 
 
@@ -49,6 +50,7 @@ async function run() {
     app.use("/notice",noticerouter(noticecollection))
     app.use("/register",registerrouter(usercollection))
     app.use("/loginuser",loginuserrouter(usercollection))
+    app.use("/upload-notice",uploadnoticerouter(noticecollection))
 
 
 
