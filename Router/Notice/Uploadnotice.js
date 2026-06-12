@@ -18,6 +18,7 @@ module.exports = (noticecollection) => {
 
       return res.status(201).send({
         message: "Notice created successfully",
+        success: true,
         insertedId: result.insertedId,
       });
 

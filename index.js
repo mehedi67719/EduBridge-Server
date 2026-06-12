@@ -35,6 +35,7 @@ async function run() {
 
     const noticecollection= db.collection("Notices");
     const usercollection= db.collection("users")
+    const assignmentcollection=db.collection("assignment")
 
 
 
@@ -42,6 +43,7 @@ async function run() {
     const registerrouter=require("./Router/authentication/Register")
     const loginuserrouter=require("./Router/Users/Loginuser")
     const uploadnoticerouter=require("./Router/Notice/Uploadnotice")
+    const uploadassignmentrouter=require("./Router/Assignment/Uploadassignment")
 
 
 
@@ -51,6 +53,7 @@ async function run() {
     app.use("/register",registerrouter(usercollection))
     app.use("/loginuser",loginuserrouter(usercollection))
     app.use("/upload-notice",uploadnoticerouter(noticecollection))
+    app.use("/upload-assignment",uploadassignmentrouter(assignmentcollection))
 
 
 
