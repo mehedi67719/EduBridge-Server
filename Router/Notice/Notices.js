@@ -1,4 +1,5 @@
 const express = require("express");
+const { ObjectId } = require("mongodb");
 
 module.exports = (noticecollection) => {
   const router = express.Router();
@@ -68,5 +69,29 @@ router.get("/", async (req, res) => {
     }
   });
 
+
+
+  router.get("/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).send({ message: "ID is required" });
+    }
+
+    const notice = await noticecollection.findOne({
+      _id: new ObjectId(id),
+    });
+
+    if (!notice) {
+      return res.status(404).send({ message: "Notice not found" });
+    }
+
+    res.send(notice);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ message: "Server error" });
+  }
+});
   return router;
 };
