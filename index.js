@@ -36,6 +36,7 @@ async function run() {
     const noticecollection= db.collection("Notices");
     const usercollection= db.collection("users")
     const assignmentcollection=db.collection("assignment")
+    const routinecollection=db.collection("routine")
 
 
 
@@ -44,9 +45,14 @@ async function run() {
     const loginuserrouter=require("./Router/Users/Loginuser")
     const uploadnoticerouter=require("./Router/Notice/Uploadnotice")
     const uploadassignmentrouter=require("./Router/Assignment/Uploadassignment")
+    const uploadroutinerouter=require("./Router/Routine/Uploadroutine")
+    const assignemntrouter=require("./Router/Assignment/assignment")
+    
 
 
-
+// app.get("/loginuser",async(req,res)=>{
+//   res.json({ message: "This route is protected",token:req.token})
+// })
 
 
     app.use("/notice",noticerouter(noticecollection))
@@ -54,6 +60,9 @@ async function run() {
     app.use("/loginuser",loginuserrouter(usercollection))
     app.use("/upload-notice",uploadnoticerouter(noticecollection))
     app.use("/upload-assignment",uploadassignmentrouter(assignmentcollection))
+    app.use("/upload-routine",uploadassignmentrouter(routinecollection))
+    app.use("/assignment",assignemntrouter(assignmentcollection))
+
 
 
 
