@@ -61,7 +61,7 @@ async function run() {
     app.use("/upload-notice",uploadnoticerouter(noticecollection))
     app.use("/upload-assignment",uploadassignmentrouter(assignmentcollection))
     app.use("/upload-routine",uploadassignmentrouter(routinecollection))
-    app.use("/assignment",assignemntrouter(assignmentcollection))
+    app.use("/assignment",assignemntrouter(assignmentcollection,usercollection))
 
 
 

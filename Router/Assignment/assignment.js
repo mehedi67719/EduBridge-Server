@@ -1,4 +1,5 @@
 const express = require("express");
+const { ObjectId } = require("mongodb");
 
 module.exports = (assignmentcollection) => {
   const router = express.Router();
@@ -93,6 +94,50 @@ module.exports = (assignmentcollection) => {
       });
     }
   });
+
+
+
+router.get("/detels", async (req, res) => {
+  try {
+    const { id, role } = req.query;
+
+    if (!id) {
+      return res.status(400).send({ message: "id is required" });
+    }
+
+    const doc = await assignmentcollection.findOne({
+      _id: new ObjectId(id),
+    });
+
+    if (!doc) {
+      return res.status(404).send({ message: "not found" });
+    }
+
+  
+    if (doc.isPrivate) {
+      const allowedRoles = role
+        ? ["public", role.toLowerCase()]
+        : ["public"];
+
+      const roleMatch =
+        doc.targetRoles &&
+        doc.targetRoles.some((r) => allowedRoles.includes(r));
+
+      if (!roleMatch) {
+        return res.status(403).send({
+          message: "You are not allowed to access this assignment",
+        });
+      }
+    }
+
+    res.status(200).send(doc);
+  } catch (err) {
+    res.status(500).send({
+      message: "server error",
+      error: err.message,
+    });
+  }
+});
 
   return router; 
 };
