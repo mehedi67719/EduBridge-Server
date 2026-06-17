@@ -5,23 +5,23 @@ module.exports = (assignmentcollection) => {
 
   router.get("/", async (req, res) => {
     try {
-      const { role, search, page, secreatecode } = req.query; 
+      const { role, search, page, secretcode, subject } = req.query; 
 
       const limit = 10;
       const pagenum = Number(page) || 1;
 
       let filter = {};
 
-      
-      if (secreatecode) {
+  
+      if (secretcode) {
+    
         const allowedRoles = role ? ["public", role.toLowerCase()] : ["public"];
-        
-        filter.secretCode = secreatecode;
+        filter.secretCode = secretcode;
         filter.isPrivate = true;
         filter.targetRoles = { $in: allowedRoles };
       } else {
+
         filter.isPrivate = { $ne: true }; 
-        
         if (role) {
           filter.targetRoles = { $in: ["public", role.toLowerCase()] };
         } else {
@@ -29,7 +29,12 @@ module.exports = (assignmentcollection) => {
         }
       }
 
+  
+      if (subject && subject.toLowerCase() !== "all") {
+        filter["subjects.name"] = subject; 
+      }
 
+  
       if (search) {
         filter.$or = [
           { assignmentTitle: { $regex: search, $options: "i" } },
@@ -40,26 +45,38 @@ module.exports = (assignmentcollection) => {
 
       const skip = (pagenum - 1) * limit;
 
- 
+
       const total = await assignmentcollection.countDocuments(filter);
 
+    
       const subjectsResult = await assignmentcollection.aggregate([
-        { $unwind: "$subjects" }, 
-        { $group: { _id: "$subjects" } }, 
+        { 
+          $unwind: { 
+            path: "$subjects", 
+            preserveNullAndEmptyArrays: true 
+          } 
+        }, 
+        { 
+          $group: { 
+            _id: "$subjects.name" 
+          } 
+        }, 
         { $sort: { _id: 1 } } 
       ]).toArray();
 
-      const allSubjects = subjectsResult.map(item => item._id);
+    
+      const allSubjects = subjectsResult
+        .map(item => item._id)
+        .filter(name => name !== null && name !== undefined && name !== "");
 
-  
+     
       const result = await assignmentcollection
         .find(filter)
-        .sort({ createdAt: -1 })
+        .sort({ createdAt: -1 }) 
         .skip(skip)
         .limit(limit)
         .toArray();
 
-     
       res.status(200).send({
         message: "routine load successful",
         subjects: allSubjects, 
