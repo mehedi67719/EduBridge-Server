@@ -37,6 +37,7 @@ async function run() {
     const usercollection= db.collection("users")
     const assignmentcollection=db.collection("assignment")
     const routinecollection=db.collection("routine")
+    const submitassignmentcoollection=db.collection("submitassignment")
 
 
 
@@ -47,6 +48,7 @@ async function run() {
     const uploadassignmentrouter=require("./Router/Assignment/Uploadassignment")
     const uploadroutinerouter=require("./Router/Routine/Uploadroutine")
     const assignemntrouter=require("./Router/Assignment/assignment")
+    const submitassignmentrouter=require("./Router/Assignment/Submitassignment")
     
 
 
@@ -62,6 +64,7 @@ async function run() {
     app.use("/upload-assignment",uploadassignmentrouter(assignmentcollection))
     app.use("/upload-routine",uploadassignmentrouter(routinecollection))
     app.use("/assignment",assignemntrouter(assignmentcollection,usercollection))
+    app.use("/submit-assignment",submitassignmentrouter(submitassignmentcoollection))
 
 
 
