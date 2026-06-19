@@ -28,7 +28,7 @@ module.exports = (submitassignmentcollection) => {
             assignmentId: { $first: "$assignmentId" },
             assignmentTitle: { $first: "$assignmentTitle" },
 
-            // ✅ ADD DEADLINE HERE
+           assignmenttotalmarks:{$first:"$assignmenttotalmarks"},
             assignmentdeadline: { $first: "$assignmentdeadline" },
 
             totalSubmissions: { $sum: 1 },
@@ -55,7 +55,8 @@ module.exports = (submitassignmentcollection) => {
             _id: 0,
             assignmentId: 1,
             assignmentTitle: 1,
-            assignmentdeadline: 1, 
+            assignmentdeadline: 1,
+            assignmenttotalmarks: 1, 
             totalSubmissions: 1,
             submissions: 1,
           },
