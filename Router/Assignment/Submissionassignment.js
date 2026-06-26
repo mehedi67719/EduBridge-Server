@@ -88,8 +88,6 @@ module.exports = (submitassignmentcollection) => {
   router.post("/post-marks", async (req, res) => {
     try {
       const { Id, marks } = req.body;
-
-   
       if (!Id || marks === undefined) {
         return res.status(400).send({
           success: false,

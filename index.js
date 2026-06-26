@@ -50,6 +50,7 @@ async function run() {
     const assignemntrouter=require("./Router/Assignment/assignment")
     const submitassignmentrouter=require("./Router/Assignment/Submitassignment")
     const submissionassignmentrouter=require("./Router/Assignment/Submissionassignment")
+    const assignmentresultrouter=require("./Router/Assignment/assignmentresult")
     
 
 
@@ -67,6 +68,7 @@ async function run() {
     app.use("/assignment",assignemntrouter(assignmentcollection,usercollection))
     app.use("/submit-assignment",submitassignmentrouter(submitassignmentcoollection))
     app.use("/submission-assignment",submissionassignmentrouter(submitassignmentcoollection))
+    app.use("/assignment-result",assignmentresultrouter(submitassignmentcoollection))
 
 
 
