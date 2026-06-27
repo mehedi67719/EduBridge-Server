@@ -51,7 +51,7 @@ async function run() {
     const submitassignmentrouter=require("./Router/Assignment/Submitassignment")
     const submissionassignmentrouter=require("./Router/Assignment/Submissionassignment")
     const assignmentresultrouter=require("./Router/Assignment/assignmentresult")
-    
+    const myuploadednoticerouter=require("./Router/Notice/myuploadednotice")
 
 
 // app.get("/loginuser",async(req,res)=>{
@@ -63,6 +63,7 @@ async function run() {
     app.use("/register",registerrouter(usercollection))
     app.use("/loginuser",loginuserrouter(usercollection))
     app.use("/upload-notice",uploadnoticerouter(noticecollection))
+    app.use("/my-uploaded-notice",myuploadednoticerouter(noticecollection))
     app.use("/upload-assignment",uploadassignmentrouter(assignmentcollection))
     app.use("/upload-routine",uploadassignmentrouter(routinecollection))
     app.use("/assignment",assignemntrouter(assignmentcollection,usercollection))
